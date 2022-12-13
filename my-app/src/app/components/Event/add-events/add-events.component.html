@@ -1,0 +1,156 @@
+<ng-container style="box-shadow: 0 5px 5px rgba(57, 63, 72, 0.3);">
+    <mat-card class="main-card">
+
+        <div class="row title">
+            <div class="col-12 col-sm-6 maintitle">
+              <mat-icon style="color: rgb(250, 139, 75); cursor: pointer;">markunread_mailbox</mat-icon>
+              <span class="page-heading" (click)="onBack()"> ADD EVENT </span>
+            </div>
+          </div>
+
+        <ng-container class="hide-mob">
+            <div class="row hide-mob" style="margin-top: 35px;">
+                <form class="example-form" [formGroup]="addEvent" (ngSubmit)="saveEvent(addEvent.value)">
+                    <div class="row">
+
+                        <!-- <div class="col-1"></div> -->
+                        <div class="col-2 formTitle">Title :</div>
+                        <div class="col-3" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-icon matSuffix>person</mat-icon>
+                                <input matInput formControlName="Title">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-2"></div>
+                        <div class="col-2 formTitle">Start Date:</div>
+                        <div class="col-3" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <input matInput type="text" [matDatepicker]="picker1" formControlName="StartDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- <div class="col-1"></div> -->
+                        <div class="col-2 formTitle">End Date:</div>
+                        <div class="col-3" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <input matInput type="text" [matDatepicker]="picker2" formControlName="EndDate"
+                                    [min]="addEvent.value.StartDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-2"></div>
+                        <div class="col-2 formTitle">Description:</div>
+                        <div class="col-3" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <textarea matInput matTextareaAutosize matAutosizeMinRows=1
+                                    matAutosizeMaxRows=5 formControlName="Description"></textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- <div class="col-1"></div> -->
+                        <div class="col-2 formTitle">Upload Image:</div>
+                        <div class="col-3" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <ngx-mat-file-input #photo formControlName="BannerImageName"
+                                    (change)="onAddImage($event)" placeholder="Image and Document Upload">
+                                    <mat-icon matPrefix>cloud_upload</mat-icon>
+                                </ngx-mat-file-input>
+                                <button mat-icon-button matSuffix *ngIf="!photo.empty"
+                                    (click)="photo.clear($event); onRemoveImage()">
+                                    <mat-icon matSuffix>clear</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+
+                        <section class="col-6">
+                            <div class="example-button-width">
+                                <button mat-raised-button type="button" style="background-color: rgb(243 137 24)"
+                                    (click)="reloadPage()">Cancel</button>
+                                <button mat-raised-button type="submit" color="primary"
+                                    style="margin-left: 10px; margin-top: 30px ; background-color: #0F3963">Save</button>
+                            </div>
+                        </section>
+                    </div>
+                </form>
+            </div>
+        </ng-container>
+
+        <ng-container class="show-mob">
+            <div class="row show-mob" style="margin-top: 35px;">
+                <form class="example-form" [formGroup]="addEvent" (ngSubmit)="saveEvent(addEvent.value)">
+                    <div class="row">
+
+                        <div class="col-12" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="legacy">
+                                <mat-icon matPrefix>person</mat-icon>
+                                <mat-label style="margin-left: 10px;">Title</mat-label>
+                                <input matInput formControlName="Title" placeholder="Title" style="margin-left: 10px;">
+                                <mat-icon matSuffix>edit</mat-icon>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-12" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="legacy">
+                                <mat-label style="margin-left: 10px;">Start Date</mat-label>
+                                <input matInput style="margin-left: 10px;" type="text" [matDatepicker]="picker3"
+                                    formControlName="StartDate" placeholder="Start Date">
+                                <mat-datepicker-toggle matPrefix [for]="picker3"></mat-datepicker-toggle>
+                                <mat-datepicker #picker3></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-12" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="legacy">
+                                <mat-label style="margin-left: 10px;">End Date</mat-label>
+                                <input matInput type="text" [matDatepicker]="picker4" formControlName="EndDate"
+                                    [min]="addEvent.value.StartDate" placeholder="End Date">
+                                <mat-datepicker-toggle matPrefix [for]="picker4"></mat-datepicker-toggle>
+                                <mat-datepicker #picker4></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-12" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="legacy">
+                                <mat-icon matPrefix>description</mat-icon>
+                                <mat-label style="margin-left: 10px;">Description</mat-label>
+                                <textarea matInput formControlName="Description" style="margin-left: 10px;"></textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-12" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="legacy">
+                                <mat-label style="margin-left: 10px;">Image and Document Upload</mat-label>
+                                <ngx-mat-file-input #photo formControlName="BannerImageName" style="margin-left: 10px;"
+                                    (change)="onAddImage($event)">
+                                </ngx-mat-file-input>
+                                <mat-icon matPrefix>cloud_upload</mat-icon>
+                                <button mat-icon-button matSuffix *ngIf="!photo.empty"
+                                    (click)="photo.clear($event); onRemoveImage()">
+                                    <mat-icon matSuffix>clear</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+
+                        <section class="col-6">
+                            <div class="example-button-width">
+                                <button mat-raised-button type="submit" color="primary"
+                                    style="width:100px; background-color: #0F3963">Submit</button>
+                            </div>
+                        </section>
+                        <section class="col-6">
+                            <div class="example-button-width">
+                                <button mat-raised-button type="button" color="primary"
+                                    style="width:100px; background-color: rgb(243 137 24)">Cancel</button>
+                            </div>
+                        </section>
+                    </div>
+                </form>
+            </div>
+        </ng-container>
+    </mat-card>
+</ng-container>

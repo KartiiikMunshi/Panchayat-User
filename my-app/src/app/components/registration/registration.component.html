@@ -1,0 +1,311 @@
+<div class="container-fluid hide-mob">
+  <mat-card class="main-card">
+
+    <ng-container style="box-shadow: 0 5px 5px rgba(57, 63, 72, 0.3);">
+      <!-- <mat-card class="main-card"> -->
+      <div class="row title">
+        <div class="col-12 col-sm-6 maintitle">
+          <mat-icon style="color: rgb(250, 139, 75); cursor: pointer;" routerLink="/add-block" matTooltip="Reload"
+            matTooltipPosition="below"> keyboard_backspace</mat-icon>
+          <span class="page-heading"> Registration </span>
+        </div>
+      </div>
+      <ng-container>
+        <div class="row" style="margin-top: 55px;">
+          <!-- <mat-card class="districtCard"> -->
+          <form class="example-form row" [formGroup]="addWard" (ngSubmit)="saveWard(addWard.value)">
+
+            <div class="col-2 formTitle">Name :</div>
+            <section class="col-3">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <input matInput formControlName="Name">
+                <!-- <mat-error
+                    *ngIf="addWard.controls['Name'].invalid && (addWard.controls['Name'].dirty || addWard.controls['Name'].touched)">
+                    <div *ngIf="addWard.controls['Name'].errors?.['required']">
+                      Name in English is required.
+                    </div>
+                  </mat-error> -->
+              </mat-form-field>
+            </section>
+
+            <div class="col-1"></div>
+
+            <div class="col-2 formTitle">Ward No :</div>
+            <section class="col-3">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <input matInput type="number" formControlName="WardNo">
+                <!-- <mat-error
+                  *ngIf="addWard.controls['WardNo'].invalid && (addWard.controls['WardNo'].dirty || addWard.controls['WardNo'].touched)">
+                  <div *ngIf="addWard.controls['WardNo'].errors?.['required']">
+                    Ward No. is required.
+                  </div>
+                </mat-error> -->
+              </mat-form-field>
+            </section>
+
+            <div class="col-1"></div>
+            <div class="col-2 formTitle">State :</div>
+            <section class="col-3">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>SELECT STATE</mat-label>
+                <mat-select formControlName="StateId">
+                  <mat-option>--select State--</mat-option>
+                  <mat-option *ngFor="let states of states" [value]="states.StateId">
+                    {{ states.Name }}
+                  </mat-option>
+                </mat-select>
+                <!-- <mat-error
+                  *ngIf="addWard.controls['StateId'].invalid && (addWard.controls['StateId'].dirty || addWard.controls['StateId'].touched)">
+                  <div *ngIf="addWard.controls['StateId'].errors?.['required']">
+                    State is required.
+                  </div>
+                </mat-error> -->
+              </mat-form-field>
+            </section>
+
+            <div class="col-1"></div>
+            <div class="col-2 formTitle">District :</div>
+            <section class="col-3">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label> SELECT DISTRICT </mat-label>
+                <mat-select formControlName="DistrictId">
+                  <mat-option>--select District--</mat-option>
+                  <mat-option value="0">Block</mat-option>
+                  <mat-option *ngFor="let district of districts" [value]="district.DistrictId">
+                    {{ district.Name }}
+                  </mat-option>
+                </mat-select>
+                <!-- <mat-error
+                  *ngIf="addWard.controls['DistrictId'].invalid && (addWard.controls['DistrictId'].dirty || addWard.controls['DistrictId'].touched)">
+                  <div *ngIf="addWard.controls['DistrictId'].errors?.['required']">
+                    District is required.
+                  </div>
+                </mat-error> -->
+              </mat-form-field>
+            </section>
+
+            <div class="col-1"></div>
+            <div class="col-2 formTitle">Block :</div>
+            <section class="col-3">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>SELECT BLOCK</mat-label>
+                <mat-select formControlName="BlockId">
+                  <mat-option>--Select Block--</mat-option>
+                  <mat-option value="0">Block</mat-option>
+                  <mat-option *ngFor="let block of blocks" [value]="block.BlockId">
+                    {{ block.Name }}
+                  </mat-option>
+                </mat-select>
+                <!-- <mat-error
+                  *ngIf="addWard.controls['BlockId'].invalid && (addWard.controls['BlockId'].dirty || addWard.controls['BlockId'].touched)">
+                  <div *ngIf="addWard.controls['BlockId'].errors?.['required']">
+                    Block is required.
+                  </div>
+                </mat-error> -->
+              </mat-form-field>
+            </section>
+
+            <div class="col-1"></div>
+            <div class="col-2 formTitle">Panchayat :</div>
+            <section class="col-3">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label> SELECT PANCHAYAT</mat-label>
+                <mat-select formControlName="PanchayatId">
+                  <mat-option value="0">Block</mat-option>
+                  <!-- <mat-option *ngFor="let panchayat of panchayats" [value]="panchayat.PanchayatId">
+                      {{ panchayat.Name }}
+                    </mat-option> -->
+                </mat-select>
+                <!-- <mat-error
+                  *ngIf="addWard.controls['PanchayatId'].invalid && (addWard.controls['PanchayatId'].dirty || addWard.controls['PanchayatId'].touched)">
+                  <div *ngIf="addWard.controls['PanchayatId'].errors?.['required']">
+                    Panchayat is required.
+                  </div>
+                </mat-error> -->
+              </mat-form-field>
+            </section>
+
+            <div class="col-2 formTitle">Address :</div>
+            <section class="col-3">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <textarea matInput formControlName="address"></textarea>
+                <!-- <mat-error
+                        *ngIf="addWard.controls['address'].invalid && (addWard.controls['address'].dirty || addWard.controls['address'].touched)">
+                        <div *ngIf="addWard.controls['address'].errors?.['required']">
+                          Address is required.
+                        </div>
+                      </mat-error> -->
+              </mat-form-field>
+            </section>
+
+            <section class="col-6">
+              <div class="example-button-width">
+                <!-- <button mat-raised-button type="button" style="background-color:#fa8b4b;"
+                    (click)="reloadPage()">Cancel</button> -->
+                <button mat-raised-button type="submit" color="primary"
+                  style="margin-left: 10px; width: 250px;  background-color: #0F3963"> Add </button>
+              </div>
+            </section>
+          </form>
+          <!-- </mat-card> -->
+        </div>
+      </ng-container>
+      <!-- </mat-card> -->
+    </ng-container>
+  </mat-card>
+</div>
+
+<div class="container-fluid show-mob">
+  <mat-card class="main-card">
+
+    <ng-container style="box-shadow: 0 5px 5px rgba(57, 63, 72, 0.3);">
+      <!-- <mat-card class="main-card"> -->
+      <div class="row title">
+        <div class="col-12 col-sm-6 maintitle">
+          <mat-icon style="color: rgb(250, 139, 75); cursor: pointer;" routerLink="/add-block" matTooltip="Reload"
+            matTooltipPosition="below"> keyboard_backspace</mat-icon>
+          <span class="page-heading">Registration </span>
+        </div>
+      </div>
+      <ng-container>
+        <div class="row" style="margin-top: 55px;">
+          <form class="example-form row" [formGroup]="addWard" (ngSubmit)="saveWard(addWard.value)">
+
+            <div class="col-12 formTitle">Name :</div>
+            <section class="col-12">
+              <mat-form-field class="example-full-width" appearance="legacy">
+                <input matInput formControlName="Name">
+                <mat-icon matSuffix>edit</mat-icon>
+                <mat-error
+                  *ngIf="addWard.controls['Name'].invalid && (addWard.controls['Name'].dirty || addWard.controls['Name'].touched)">
+                  <div *ngIf="addWard.controls['Name'].errors?.['required']">
+                    Name is required.
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </section>
+
+            <!-- <div class="col-1"></div> -->
+
+            <div class="col-12 formTitle">Ward No :</div>
+            <section class="col-12">
+              <mat-form-field class="example-full-width" appearance="legacy">
+                <input matInput type="number" formControlName="WardNo">
+                <mat-icon matSuffix>edit</mat-icon>
+                <mat-error
+                  *ngIf="addWard.controls['WardNo'].invalid && (addWard.controls['WardNo'].dirty || addWard.controls['WardNo'].touched)">
+                  <div *ngIf="addWard.controls['WardNo'].errors?.['required']">
+                    Ward No. is required.
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </section>
+
+            <!-- <div class="col-1"></div> -->
+            <div class="col-12 formTitle">State :</div>
+            <section class="col-12">
+              <mat-form-field class="example-full-width" appearance="legacy">
+                <mat-label>SELECT STATE</mat-label>
+                <mat-select formControlName="StateId">
+                  <mat-option>--select State--</mat-option>
+                  <mat-option *ngFor="let states of states" [value]="states.StateId">
+                    {{ states.Name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="addWard.controls['StateId'].invalid && (addWard.controls['StateId'].dirty || addWard.controls['StateId'].touched)">
+                  <div *ngIf="addWard.controls['StateId'].errors?.['required']">
+                    State is required.
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </section>
+
+            <!-- <div class="col-1"></div> -->
+            <div class="col-12 formTitle">District :</div>
+            <section class="col-12">
+              <mat-form-field class="example-full-width" appearance="legacy">
+                <mat-label> SELECT DISTRICT </mat-label>
+                <mat-select formControlName="DistrictId">
+                  <mat-option>--select District--</mat-option>
+                  <mat-option *ngFor="let district of districts" [value]="district.DistrictId">
+                    {{ district.Name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="addWard.controls['DistrictId'].invalid && (addWard.controls['DistrictId'].dirty || addWard.controls['DistrictId'].touched)">
+                  <div *ngIf="addWard.controls['DistrictId'].errors?.['required']">
+                    District is required.
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </section>
+
+            <!-- <div class="col-1"></div> -->
+            <div class="col-12 formTitle">Block :</div>
+            <section class="col-12">
+              <mat-form-field class="example-full-width" appearance="legacy">
+                <mat-label>SELECT BLOCK</mat-label>
+                <mat-select formControlName="BlockId" required>
+                  <mat-option>--Select Block--</mat-option>
+                  <mat-option *ngFor="let block of blocks" [value]="block.BlockId">
+                    {{ block.Name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="addWard.controls['BlockId'].invalid && (addWard.controls['BlockId'].dirty || addWard.controls['BlockId'].touched)">
+                  <div *ngIf="addWard.controls['BlockId'].errors?.['required']">
+                    Block is required.
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </section>
+
+            <!-- <div class="col-1"></div> -->
+            <div class="col-12 formTitle">Panchayat :</div>
+            <section class="col-12">
+              <mat-form-field class="example-full-width" appearance="legacy">
+                <mat-label> SELECT PANCHAYAT</mat-label>
+                <mat-select formControlName="PanchayatId" required>
+                  <mat-option *ngFor="let panchayat of panchayats" [value]="panchayat.PanchayatId">
+                    {{ panchayat.Name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="addWard.controls['PanchayatId'].invalid && (addWard.controls['PanchayatId'].dirty || addWard.controls['PanchayatId'].touched)">
+                  <div *ngIf="addWard.controls['PanchayatId'].errors?.['required']">
+                    Panchayat is required.
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </section>
+
+            <!-- <div class="col-1"></div> -->
+            <div class="col-12 formTitle">Address :</div>
+            <div class="col-12">
+              <mat-form-field class="example-full-width" appearance="legacy">
+                <textarea matInput formControlName="address"></textarea>
+                <mat-icon matSuffix>edit</mat-icon>
+                <mat-error
+                  *ngIf="addWard.controls['address'].invalid && (addWard.controls['address'].dirty || addWard.controls['address'].touched)">
+                  <div *ngIf="addWard.controls['address'].errors?.['required']">
+                    Address is required.
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <section class="col-12">
+              <div class="example-button-width">
+                <button mat-raised-button type="submit" color="primary"
+                  style="width:180px; background-color: #0F3963">Add</button>
+              </div>
+            </section>
+          </form>
+          <!-- </mat-card> -->
+        </div>
+      </ng-container>
+      <!-- </mat-card> -->
+    </ng-container>
+  </mat-card>
+</div>

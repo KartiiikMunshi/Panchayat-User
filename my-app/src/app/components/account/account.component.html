@@ -1,0 +1,93 @@
+<ng-container style="box-shadow: 0 5px 5px rgba(57, 63, 72, 0.3);">
+    <mat-card class="main-card">
+        <ng-container class="hide-mob">
+            <mat-card class="example-card hide-mob">
+                <div class="row hide-mob" style="margin-top: 35px;">
+                    <form class="example-form" [formGroup]="accountForm" (ngSubmit)="saveUser(accountForm.value)">
+                        <div class="row">
+
+                            <div class="col-12" class="from_body" style="margin-bottom:40px;" *ngIf="!imageSrc">
+                                <img src="./assets/images/avatar.png" width="20%" height="100%"
+                                    style="border-radius: 50%;">
+                            </div>
+
+                            <mat-card-content>
+                                <div class="col-10" style="padding-left:10px;">
+                                    <mat-form-field class="example-full-width" appearance="legacy">
+                                        <mat-icon matPrefix>person</mat-icon>
+                                        <mat-label style="padding-left:10px;">Name</mat-label>
+                                        <input matInput formControlName="FirstName">
+                                        <mat-icon matSuffix>edit</mat-icon>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-10" style="padding-left:10px;">
+                                    <mat-form-field class="example-full-width" appearance="legacy">
+                                        <mat-icon matPrefix>home</mat-icon>
+                                        <mat-label style="padding-left:10px;">Address</mat-label>
+                                        <textarea matInput formControlName="Address"></textarea>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-10" style="padding-left:10px;">
+                                    <mat-form-field class="example-full-width" appearance="legacy">
+                                        <mat-label style="padding-left:0px;">Phone</mat-label>
+                                        <span matPrefix class="contecticon">+91 &nbsp;</span>
+                                        <input type="tel" matInput formControlName="Phone" placeholder="555-555-1234"
+                                            maxlength="10">
+                                        <mat-icon matSuffix>mode_edit</mat-icon>
+                                    </mat-form-field>
+                                </div>
+                            </mat-card-content>
+                        </div>
+                    </form>
+                </div>
+            </mat-card>
+        </ng-container>
+
+
+
+        <ng-container class="show-mob">
+            <mat-card class="example-card show-mob">
+                <div class="row show-mob" style="margin-top: 35px;">
+                    <form class="example-form" [formGroup]="accountForm" (ngSubmit)="saveUser(accountForm.value)">
+                        <div class="row">
+                            <div class="col-12" class="from_body" style="margin-bottom:40px;" *ngIf="!imageSrc">
+                                <img src="./assets/images/avatar.png" width="20%" height="100%"
+                                    style="border-radius: 50%;">
+                            </div>
+
+                            <div class="col-12">
+                                <mat-form-field class="example-full-width" appearance="legacy">
+                                    <mat-icon matPrefix>person</mat-icon>
+                                    <mat-label style="margin-left: 10px;">Name</mat-label>
+                                    <input matInput placeholder="" formControlName="FirstName">
+                                    <mat-icon matSuffix>edit</mat-icon>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12">
+                                <mat-form-field class="example-full-width" appearance="legacy">
+                                    <mat-icon matPrefix>home</mat-icon>
+                                    <mat-label style="margin-left: 10px;">Address</mat-label>
+                                    <textarea matInput formControlName="Address"></textarea>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12" >
+                                <mat-form-field class="example-full-width" appearance="legacy">
+                                    <mat-icon matPrefix>phone_forwarded</mat-icon>
+                                    <mat-label style="margin-left: 10px;">Phone</mat-label>
+                                    <span style="margin-left: 10px;" matPrefix>+91 &nbsp;</span>
+                                    <input type="tel" matInput placeholder="555-555-1234" maxlength="10"
+                                        formControlName="Phone">
+                                    <mat-icon matSuffix>mode_edit</mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </mat-card>
+        </ng-container>
+    </mat-card>
+</ng-container>

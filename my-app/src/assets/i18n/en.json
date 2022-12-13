@@ -1,0 +1,18 @@
+{
+    "TITLE": "TITLE",
+    "WARD_NO": "WARD NO",
+    "DATE": "DATE",
+    "POSTED_BY": "POSTED BY",
+    "SUB-CATEGORY": "SUB-CATEGORY",
+    "CATEGORY": "CATEGORY",
+    "WARD": "WARD",
+    "STATUS": "STATUS",
+    "COMPLAINT_NAME" : "COMPLAINT NAME",
+    "NAME" : "NAME",
+    "English" : "English",
+    "Hindi" : "Hindi",
+    "Mobile" :  "Mobile",
+    "Name" : "Name",
+    "Panchayat_Id" : "Panchayat Id",
+    "Ward_Id" : "Ward Id"
+}

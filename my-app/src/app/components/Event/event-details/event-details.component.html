@@ -1,0 +1,130 @@
+<div class="container-flud">
+    <mat-card class="main-card hide-mob ">
+        <div class="row title">
+            <div class="col-12 col-sm-6 maintitle">
+                <mat-icon style="color: rgb(250, 139, 75); cursor: pointer;" (click)="reloadPage()" matTooltip="Reload"
+                    matTooltipPosition="below">keyboard_backspace</mat-icon>
+                <span class="page-heading">/ Event ( {{ Title }} ) </span>
+
+            </div>
+        </div>
+
+        <div class="eventimg mt-4 hide-mob">
+            <img src="../../../assets/images/eventimg.jpg" alt="image is not available" height="300px">
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 col-sm-3 col-lg-12">
+                <!-- <label class="page-sub-title-main mb-3"> Regional Festival :</label> -->
+            </div>
+            <mat-divider></mat-divider>
+            <div class="col-4 col-sm-3 col-lg-2 mt-3">
+                <label class="page-sub-title mb-3">Posted By :</label>
+            </div>
+            <div class="col-8 col-sm-9 col-lg-4 mt-3">
+                <span class="title-data"> {{ CreatedBy }} </span>
+            </div>
+
+
+            <div class="col-4 col-sm-3 col-lg-2 mt-3">
+                <label class="page-sub-title mb-3">Panchayat Name :</label>
+            </div>
+            <div class="col-8 col-sm-9 col-lg-4 mt-3">
+                <span class="title-data"> {{ Panchayat }} </span>
+            </div>
+
+            <div class="col-4 col-sm-3 col-lg-2">
+                <label class="page-sub-title mb-3">Start Date :</label>
+            </div>
+            <div class="col-8 col-sm-9 col-lg-4">
+                <span class="title-data"> {{ startdDate }} </span>
+            </div>
+
+            <div class="col-4 col-sm-3 col-lg-2">
+                <label class="page-sub-title mb-3">End Date :</label>
+            </div>
+            <div class="col-8 col-sm-9 col-lg-4">
+                <span class="title-data"> {{ endDate }} </span>
+            </div>
+
+            <div class="col-4 col-sm-3 col-lg-2">
+                <label class="page-sub-title mb-3">Description :</label>
+            </div>
+            <div class="col-8 col-sm-9 col-lg-4">
+                <p class="title-data">{{ Description }}</p>
+            </div>
+            <!-- <mat-divider></mat-divider> -->
+            <div class="col-12">
+                <mat-divider></mat-divider>
+            </div>
+            <!-- </mat-card> -->
+        </div>
+    </mat-card>
+
+    <!-- --------------------------------------------Mobile View----------------------------------------- -->
+
+    <div class="row title show-mob">
+        <div class="col-12 col-sm-6 maintitle">
+            <mat-icon style="color: rgb(250, 139, 75); cursor: pointer;" (click)="reloadPage()" matTooltip="Reload"
+                matTooltipPosition="below">keyboard_backspace</mat-icon>
+            <span class="page-heading">/ Event ( {{ Title }} )</span>
+        </div>
+    </div>
+
+    <div class="row mt-4 show-mob">
+        <div class="col-12 col-sm-3 col-lg-12">
+            <!-- <mat-icon>keyboard_backspace</mat-icon> -->
+            <!-- <label class="page-sub-title-main mb-3"> Regional Festival :</label> -->
+        </div>
+
+        <img src="../../../assets/images/eventimg.jpg">
+
+        <ng-container>
+            <mat-card>
+
+                <mat-card-header>
+                    <mat-card-title class="DetailsHeader"> {{ Title }} </mat-card-title>
+                </mat-card-header>
+
+                <mat-divider class="divider"></mat-divider>
+
+                <mat-card-content>
+                    <div class="col-12 mt-3">
+                        <label class="page-sub-title mb-3">Posted By :</label>
+                        <span class="title-data"> {{ CreatedBy }} </span>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="page-sub-title mb-3">Panchayat Name :</label>
+                        <span class="title-data"> {{ Panchayat }} </span>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="page-sub-title mb-3">Start Date :</label>
+                        <span class="title-data"> {{ startdDate }} </span>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="page-sub-title mb-3">End Date :</label>
+                        <span class="title-data"> {{ endDate }} </span>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="page-sub-title mb-3">Description :</label>
+                        <span class="title-data"> {{ Description }} </span>
+                    </div>
+
+                    <!-- <mat-card-content>
+                        <div class="col-12 title-datades">
+                            <p>{{ Description }}</p>
+                        </div>
+                    </mat-card-content> -->
+                    <mat-card-footer class="card-footer"></mat-card-footer>
+                </mat-card-content>
+
+
+            </mat-card>
+        </ng-container>
+    </div>
+    <!-- </mat-card> -->
+</div>

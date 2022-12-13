@@ -1,0 +1,771 @@
+<!-- <app-home [isSearch]="isSearch"></app-home> -->
+<mat-form-field *ngIf="isSearch" class="col-12 searchrecords" appearance="outline" style="margin-top: 10px;">
+    <input matInput (keyup)="fireFilterEvent($event)" placeholder="Search Records">
+</mat-form-field>
+
+<mat-tab-group mat-align-tabs="center">
+
+    <mat-tab label="Events">
+        <!-- <app-events></app-events> -->
+        <!-- -------------------------------------------------- -->
+        <ng-container>
+            <div class="col-12 hide-mob" *ngIf="dataSource && dataSource.data.length > 0">
+
+                <div class="example-container mat-elevation-z8">
+                    <mat-table #table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="Title">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'TITLE' | translate }}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.Title}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="PostedBy">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'POSTED_BY' | translate }}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.CreatedBy}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CreatedBy">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'WARD_NO' | translate }}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.CreatedBy}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CreatedDate">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'DATE' | translate }}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.CreatedDate | date:'dd/MM/yyyy'}} </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;" style="cursor: pointer;"
+                            [routerLink]="['event-details', row.EventId]"></mat-row>
+                    </mat-table>
+                    <mat-paginator #paginator [length]="dataSource.data.length" [pageSize]="5"
+                        [pageSizeOptions]="[2, 5, 10, 20]" [pageIndex]="pageIndex" hidePageSize showFirstLastButtons
+                        (page)="onPaginateChange($event)" dir="ltr">
+                    </mat-paginator>
+                </div>
+            </div>
+            <div class="row">
+                <div class="center" *ngIf="dataSource && dataSource.data.length == 0">
+                    <mat-icon class="center-icon">cloud_queue</mat-icon>
+                    <span class="center-text">NO DATA FOUND</span>
+                </div>
+            </div>
+
+            <div class="col-12 show-small-mob">
+
+                <table mat-table [dataSource]="dataSourceSmall" multiTemplateDataRows>
+
+                    <ng-container matColumnDef="Title">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" class="title-td titlecell">
+                            {{element.Title}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="img">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" class="sequence-mob1 title-td imgcell">
+                            <!-- <img class="sequence-mob1" src="../../../assets/images/bglisticon.jpg" /> -->
+                            <img class="sequence-mob1" src="../../../assets/images/eventlstimgs.jpg" />
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="expandedDetail">
+                        <td class="expanded-td" mat-cell *matCellDef="let element">
+                            <div class="row expanded-div">
+
+                                <div class="col-12"> {{ 'POSTED_BY' | translate }} :
+                                    <span>{{element.CreatedBy}}</span>
+                                </div>
+
+                                <div class="col-12">
+                                    <span class="sequence-mob"> {{ 'WARD_NO' | translate }} :
+                                        {{element.CreatedBy}}</span>
+                                </div>
+
+                                <div class="col-12">
+                                    <span>{{element.CreatedDate | date : 'dd/MM/yyyy'}}</span>
+                                </div>
+
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsSmallMob; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let element; columns: displayedColumnsSmallMob;" style="cursor: pointer;">
+                    </tr>
+                    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                        [routerLink]="['event-details', row.EventId]"></tr>
+                </table>
+                <mat-paginator #scheduledOrdersPaginator [length]="dataSourceSmall.data.length" [pageSize]="5"
+                    [pageIndex]="0" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+            </div>
+        </ng-container>
+        <!-- --------------------------------------------------- -->
+        <div class="example-button-container">
+            <button mat-fab color="warn" aria-label="Example icon button with a bookmark icon" routerLink="add-event">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </mat-tab>
+
+    <!-- --------------------------------------All Complaint ------------------------------------------------- -->
+
+    <mat-tab label="All Complaint">
+        <!-- <app-all-complaint></app-all-complaint> -->
+        <mat-tab-group mat-align-tabs="center">
+
+            <mat-tab label="New">
+                <div class="col-12 hide-mob" *ngIf="newDataSource && newDataSource.data.length > 0">
+
+                    <div class="example-container mat-elevation-z8">
+                        <mat-table #table [dataSource]="newDataSource" matSort #sorter1="matSort">
+
+                            <ng-container matColumnDef="complaintName">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'COMPLAINT_NAME' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.Title}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="category">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{'CATEGORY' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.TblCategories.En_Name}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="subCategory">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'SUB-CATEGORY' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.TblSubCategories.En_Name}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'STATUS' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.TblStatu.En_Name}} </mat-cell>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="ward">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{'WARD' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.ComplaintUser.WardId}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{'NAME' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.ComplaintUser.FirstName + " " +
+                                    element.ComplaintUser.LastName}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Date">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'DATE' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.CreatedDate | date : 'dd/MM/yyyy'}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumnsComplaint"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumnsComplaint;"
+                                [routerLink]="['complaint-details', row.ComplaintsId]"></mat-row>
+                        </mat-table>
+                        <mat-paginator #MatPaginator1="matPaginator" [length]="newDataSource.data.length" [pageSize]="5"
+                            [pageSizeOptions]="[2, 5, 10, 20]" [pageIndex]="pageIndex" hidePageSize showFirstLastButtons
+                            (page)="onPaginateChange($event)" dir="ltr">
+                        </mat-paginator>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="center" *ngIf="newDataSource && newDataSource.data.length == 0">
+                        <mat-icon class="center-icon">cloud_queue</mat-icon>
+                        <span class="center-text">NO DATA FOUND</span>
+                    </div>
+                </div>
+
+                <div class="col-12 show-small-mob">
+                    <table mat-table [dataSource]="newDataSourceSmall" multiTemplateDataRows>
+                        <mat-card>
+                            <ng-container matColumnDef="Title">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element" class="title-td titlecell">
+                                    {{element.Title}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Img">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element" class="sequence-mob1 title-td imgcell">
+                                    <img class="sequence-mob1" src="../../../assets/images/R.jfif" />
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="expandedDetail">
+                                <td class="expanded-td" mat-cell *matCellDef="let element">
+                                    <div class="row expanded-div">
+                                        <div class="col-12">
+                                            <span class="listheader">{{'CATEGORY' | translate }} :</span>
+                                            <span>{{" "+ element.TblCategories.En_Name}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="sequence-mob">
+                                                <span>Status :</span>
+                                                {{element.TblStatu.En_Name}}
+                                            </span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="listheader"> {{ 'SUB-CATEGORY' | translate }} :</span>
+                                            <span>{{ " "+ element.TblSubCategories.En_Name}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="listheader">{{'WARD' | translate }} :</span>
+                                            <span>{{ " "+ element.ComplaintUser.WardId}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="listheader">{{'NAME' | translate }} :</span>
+                                            <span>{{ " "+element.ComplaintUser.FirstName + " " +
+                                                element.ComplaintUser.LastName}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span>{{element.CreatedDate | date : 'dd/MM/yyyy'}}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </ng-container>
+                        </mat-card>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsSmallMobComplaint; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let element; columns: displayedColumnsSmallMobComplaint;"
+                            style="cursor: pointer;" [routerLink]="['complaint-details', element.ComplaintsId]"></tr>
+                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                            [routerLink]="['complaint-details', row.ComplaintsId]"></tr>
+                    </table>
+                    <mat-paginator #scheduledOrdersPaginator1 [length]="newDataSourceSmall.data.length" [pageSize]="5"
+                        [pageIndex]="0" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+                </div>
+            </mat-tab>
+            <mat-tab label="In-process">
+                <div class="col-12 hide-mob" *ngIf="processDataSource && processDataSource.data.length > 0">
+
+                    <div class="example-container mat-elevation-z8">
+                        <mat-table #table [dataSource]="processDataSource" matSort #sorter2="matSort">
+
+                            <ng-container matColumnDef="complaintName">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'COMPLAINT_NAME' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.Title}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="category">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{'CATEGORY' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.TblCategories.En_Name}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="subCategory">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'SUB-CATEGORY' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.TblSubCategories.En_Name}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'STATUS' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.TblStatu.En_Name}} </mat-cell>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="ward">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{'WARD' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.ComplaintUser.WardId}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{'NAME' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.ComplaintUser.FirstName + " " +
+                                    element.ComplaintUser.LastName}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Date">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'DATE' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.CreatedDate | date : 'dd/MM/yyyy'}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumnsComplaint"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumnsComplaint;"
+                                [routerLink]="['complaint-details', row.ComplaintsId]"></mat-row>
+                        </mat-table>
+                        <mat-paginator #MatPaginator2="matPaginator" [length]="processDataSource.data.length"
+                            [pageSize]="5" [pageSizeOptions]="[2, 5, 10, 20]" [pageIndex]="0" hidePageSize
+                            showFirstLastButtons (page)="onPaginateChange($event)" dir="ltr">
+                        </mat-paginator>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="center" *ngIf="processDataSource && processDataSource.data.length == 0">
+                        <mat-icon class="center-icon">cloud_queue</mat-icon>
+                        <span class="center-text">NO DATA FOUND</span>
+                    </div>
+                </div>
+
+                <div class="col-12 show-small-mob">
+                    <table mat-table [dataSource]="processDataSourceSmall" multiTemplateDataRows>
+                        <mat-card>
+                            <ng-container matColumnDef="Title">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element" class="title-td titlecell">
+                                    {{element.Title}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Img">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element" class="sequence-mob1 title-td imgcell">
+                                    <img class="sequence-mob1" src="../../../assets/images/bglisticon.jpg" />
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="expandedDetail">
+                                <td class="expanded-td" mat-cell *matCellDef="let element">
+                                    <div class="row expanded-div">
+                                        <div class="col-12">
+                                            <span class="listheader">{{'CATEGORY' | translate }} :</span>
+                                            <span>{{" "+ element.TblCategories.En_Name}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="sequence-mob">
+                                                <span>{{ 'STATUS' | translate }} :</span>
+                                                {{element.TblStatu.En_Name}}
+                                            </span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="listheader"> {{ 'SUB-CATEGORY' | translate }} :</span>
+                                            <span>{{ " "+ element.TblSubCategories.En_Name}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="listheader">{{'WARD' | translate }} :</span>
+                                            <span>{{ " "+ element.ComplaintUser.WardId}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="listheader">{{'NAME' | translate }} :</span>
+                                            <span>{{ " "+element.ComplaintUser.FirstName + " " +
+                                                element.ComplaintUser.LastName}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span>{{element.CreatedDate | date : 'dd/MM/yyyy'}}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </ng-container>
+                        </mat-card>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsSmallMobComplaint; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let element; columns: displayedColumnsSmallMobComplaint;"
+                            style="cursor: pointer;" [routerLink]="['complaint-details', element.ComplaintsId]"></tr>
+                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                            [routerLink]="['complaint-details', row.ComplaintsId]"></tr>
+                    </table>
+                    <mat-paginator #scheduledOrdersPaginator2 [length]="processDataSourceSmall.data.length"
+                        [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+                </div>
+            </mat-tab>
+            <mat-tab label="On-Hold">
+                <div class="col-12 hide-mob" *ngIf="holdDataSource && holdDataSource.data.length > 0">
+
+                    <div class="example-container mat-elevation-z8">
+                        <mat-table #table [dataSource]="holdDataSource" matSort #sorter3="matSort">
+
+                            <ng-container matColumnDef="complaintName">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'COMPLAINT_NAME' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.Title}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="category">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{'CATEGORY' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.TblCategories.En_Name}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="subCategory">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'SUB-CATEGORY' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.TblSubCategories.En_Name}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'STATUS' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.TblStatu.En_Name}} </mat-cell>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="ward">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{'WARD' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.ComplaintUser.WardId}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{'NAME' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.ComplaintUser.FirstName + " " +
+                                    element.ComplaintUser.LastName}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Date">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'DATE' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.CreatedDate | date : 'dd/MM/yyyy'}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumnsComplaint"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumnsComplaint;"
+                                [routerLink]="['complaint-details', row.ComplaintsId]"></mat-row>
+                        </mat-table>
+                        <mat-paginator #MatPaginator3="matPaginator" [length]="holdDataSource.data.length"
+                            [pageSize]="5" [pageSizeOptions]="[2, 5, 10, 20]" [pageIndex]="0" hidePageSize
+                            showFirstLastButtons (page)="onPaginateChange($event)" dir="ltr">
+                        </mat-paginator>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="center" *ngIf="holdDataSource && holdDataSource.data.length == 0">
+                        <mat-icon class="center-icon">cloud_queue</mat-icon>
+                        <span class="center-text">NO DATA FOUND</span>
+                    </div>
+                </div>
+
+                <div class="col-12 show-small-mob">
+                    <table mat-table [dataSource]="holdDataSourceSmall" multiTemplateDataRows>
+                        <mat-card>
+                            <ng-container matColumnDef="Title">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element" class="title-td titlecell">
+                                    {{element.Title}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Img">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element" class="sequence-mob1 title-td imgcell">
+                                    <img class="sequence-mob1" src="../../../assets/images/bglisticon.jpg" />
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="expandedDetail">
+                                <td class="expanded-td" mat-cell *matCellDef="let element">
+                                    <div class="row expanded-div">
+                                        <div class="col-12">
+                                            <span class="listheader">{{'CATEGORY' | translate }} :</span>
+                                            <span>{{" "+ element.TblCategories.En_Name}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="sequence-mob">
+                                                <span>{{ 'STATUS' | translate }} :</span>
+                                                {{element.TblStatu.En_Name}}
+                                            </span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="listheader"> {{ 'SUB-CATEGORY' | translate }} :</span>
+                                            <span>{{ " "+ element.TblSubCategories.En_Name}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="listheader">{{'WARD' | translate }} :</span>
+                                            <span>{{ " "+ element.ComplaintUser.WardId}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="listheader">{{'NAME' | translate }} :</span>
+                                            <span>{{ " "+element.ComplaintUser.FirstName + " " +
+                                                element.ComplaintUser.LastName}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span>{{element.CreatedDate | date : 'dd/MM/yyyy'}}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </ng-container>
+                        </mat-card>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsSmallMobComplaint; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let element; columns: displayedColumnsSmallMobComplaint;"
+                            style="cursor: pointer;" [routerLink]="['complaint-details', element.ComplaintsId]"></tr>
+                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                            [routerLink]="['complaint-details', row.ComplaintsId]"></tr>
+                    </table>
+                    <mat-paginator #scheduledOrdersPaginator3 [length]="holdDataSourceSmall.data.length" [pageSize]="5"
+                        [pageIndex]="0" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+                </div>
+            </mat-tab>
+            <mat-tab label="Completed">
+                <div class="col-12 hide-mob" *ngIf="completedDataSource && completedDataSource.data.length > 0">
+                    <div class="example-container mat-elevation-z8">
+                        <mat-table #table [dataSource]="completedDataSource" matSort #sorter4="matSort">
+
+                            <ng-container matColumnDef="complaintName">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'COMPLAINT_NAME' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.Title}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="category">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{'CATEGORY' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.TblCategories.En_Name}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="subCategory">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'SUB-CATEGORY' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.TblSubCategories.En_Name}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'STATUS' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.TblStatu.En_Name}} </mat-cell>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="ward">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{'WARD' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.ComplaintUser.WardId}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{'NAME' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.ComplaintUser.FirstName + " " +
+                                    element.ComplaintUser.LastName}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Date">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'DATE' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.CreatedDate | date : 'dd/MM/yyyy'}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumnsComplaint"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumnsComplaint;"
+                                [routerLink]="['complaint-details', row.ComplaintsId]"></mat-row>
+                        </mat-table>
+                        <mat-paginator #MatPaginator4="matPaginator" [length]="completedDataSource.data.length"
+                            [pageSize]="5" [pageSizeOptions]="[2, 5, 10, 20]" [pageIndex]="0" hidePageSize
+                            showFirstLastButtons (page)="onPaginateChange($event)" dir="ltr">
+                        </mat-paginator>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="center" *ngIf="completedDataSource && completedDataSource.data.length == 0">
+                        <mat-icon class="center-icon">cloud_queue</mat-icon>
+                        <span class="center-text">NO DATA FOUND</span>
+                    </div>
+                </div>
+
+                <div class="col-12 show-small-mob">
+                    <table mat-table [dataSource]="completedDataSourceSmall" multiTemplateDataRows>
+                        <mat-card>
+                            <ng-container matColumnDef="Title">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element" class="title-td titlecell">
+                                    {{element.Title}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Img">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element" class="sequence-mob1 title-td imgcell">
+                                    <img class="sequence-mob1" src="../../../assets/images/bglisticon.jpg" />
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="expandedDetail">
+                                <td class="expanded-td" mat-cell *matCellDef="let element">
+                                    <div class="row expanded-div">
+                                        <div class="col-12">
+                                            <span class="listheader"> {{'CATEGORY' | translate }} :</span>
+                                            <span>{{" "+ element.TblCategories.En_Name}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="sequence-mob">
+                                                <span>{{ 'STATUS' | translate }} :</span>
+                                                {{element.TblStatu.En_Name}}
+                                            </span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="listheader"> {{ 'SUB-CATEGORY' | translate }} :</span>
+                                            <span>{{ " "+ element.TblSubCategories.En_Name}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="listheader">{{'WARD' | translate }} :</span>
+                                            <span>{{ " "+ element.ComplaintUser.WardId}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span class="listheader">{{'NAME' | translate }} :</span>
+                                            <span>{{ " "+element.ComplaintUser.FirstName + " " +
+                                                element.ComplaintUser.LastName}}</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <span>{{element.CreatedDate | date : 'dd/MM/yyyy'}}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </ng-container>
+                        </mat-card>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsSmallMobComplaint; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let element; columns: displayedColumnsSmallMobComplaint;"
+                            style="cursor: pointer;" [routerLink]="['complaint-details', element.ComplaintsId]"></tr>
+                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                            [routerLink]="['complaint-details', row.ComplaintsId]"></tr>
+                    </table>
+                    <mat-paginator #scheduledOrdersPaginator4 [length]="completedDataSourceSmall.data.length"
+                        [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-tab>
+
+    <!-- --------------------------------------My Complaint ------------------------------------------------- -->
+    <mat-tab label="My Complaint">
+        <!-- <app-my-complaint></app-my-complaint> -->
+        <div class="col-12 hide-mob" *ngIf="myComplaintDataSource && myComplaintDataSource.data.length > 0">
+
+            <div class="example-container mat-elevation-z8">
+                <mat-table #table [dataSource]="myComplaintDataSource" matSort #sorter5="matSort">
+
+                    <ng-container matColumnDef="complaintName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'COMPLAINT_NAME' | translate }}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.Title}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="category">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{'CATEGORY' | translate }}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.TblCategories.En_Name}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="subCategory">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'SUB-CATEGORY' | translate }}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.TblSubCategories.En_Name}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'STATUS' | translate }}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.TblStatu.En_Name}} </mat-cell>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="ward">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{'WARD' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.ComplaintUser.WardId}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Name">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{'NAME' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.ComplaintUser.FirstName + " " +
+                            element.ComplaintUser.LastName}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Date">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'DATE' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.CreatedDate | date : 'dd/MM/yyyy'}} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumnsComplaint"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumnsComplaint;"
+                        [routerLink]="['complaint-details', row.ComplaintsId]"></mat-row>
+                </mat-table>
+                <mat-paginator #paginator [length]="myComplaintDataSource.data.length" [pageSize]="5"
+                    [pageSizeOptions]="[2, 5, 10, 20]" [pageIndex]="pageIndex" hidePageSize showFirstLastButtons
+                    (page)="onPaginateChange($event)" dir="ltr">
+                </mat-paginator>
+            </div>
+        </div>
+        <div class="row">
+            <div class="center" *ngIf="myComplaintDataSource && myComplaintDataSource.data.length == 0">
+                <mat-icon class="center-icon">cloud_queue</mat-icon>
+                <span class="center-text">NO DATA FOUND</span>
+            </div>
+        </div>
+
+        <div class="col-12 show-small-mob">
+            <table mat-table [dataSource]="myComplaintDataSource" multiTemplateDataRows>
+                <mat-card>
+                    <ng-container matColumnDef="Title">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" class="title-td titlecell">
+                            {{element.Title}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Img">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" class="sequence-mob1 title-td imgcell">
+                            <img class="sequence-mob1" src="../../../assets/images/bglisticon.jpg" />
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="expandedDetail">
+                        <td class="expanded-td" mat-cell *matCellDef="let element">
+                            <div class="row expanded-div">
+                                <div class="col-12">
+                                    <span class="listheader"> {{'CATEGORY' | translate }} :</span>
+                                    <span>{{" "+ element.TblCategories.En_Name}}</span>
+                                </div>
+                                <div class="col-12">
+                                    <span class="sequence-mob">
+                                        <span>{{ 'STATUS' | translate }} :</span>
+                                        {{element.TblStatu.En_Name}}
+                                    </span>
+                                </div>
+                                <div class="col-12">
+                                    <span class="listheader"> {{ 'SUB-CATEGORY' | translate }} :</span>
+                                    <span>{{ " "+ element.TblSubCategories.En_Name}}</span>
+                                </div>
+                                <div class="col-12">
+                                    <span class="listheader">{{ 'WARD' | translate }} :</span>
+                                    <span>{{ " "+ element.ward}}</span>
+                                </div>
+                                <div class="col-12">
+                                    <span class="listheader">{{ 'NAME' | translate }} :</span>
+                                    <span>{{ " "+element.ComplaintUser.FirstName + " " +
+                                        element.ComplaintUser.LastName}}</span>
+                                </div>
+                                <div class="col-12">
+                                    <span>{{element.CreatedDate | date : 'dd/MM/yyyy'}}</span>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+                </mat-card>
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsSmallMobComplaint; sticky: true"></tr>
+                <tr mat-row *matRowDef="let element; columns: displayedColumnsSmallMobComplaint;"
+                    style="cursor: pointer;" [routerLink]="['complaint-details', element.ComplaintsId]"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                    [routerLink]="['complaint-details', row.ComplaintsId]"></tr>
+            </table>
+            <mat-paginator #scheduledOrdersPaginator5 [length]="myComplaintDataSourceSmall.data.length" [pageSize]="5"
+                [pageIndex]="0" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+        </div>
+        <!-- ------------------------------------------- -->
+        <div class="example-button-container">
+            <button mat-fab color="warn" aria-label="Example icon button with a bookmark icon"
+                routerLink="add-complaint">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </mat-tab>
+
+</mat-tab-group>
+<router-outlet></router-outlet>

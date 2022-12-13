@@ -1,0 +1,167 @@
+<ng-container style="box-shadow: 0 5px 5px rgba(57, 63, 72, 0.3);">
+    <mat-card class="main-card">
+
+        <div class="row title">
+            <div class="col-12 col-sm-6 maintitle">
+              <mat-icon style="color: rgb(250, 139, 75); cursor: pointer;">markunread_mailbox</mat-icon>
+              <span class="page-heading" (click)="onBack()"> ADD COMPLANT </span>
+            </div>
+          </div>
+
+        <ng-container class="hide-mob">
+            <div class="row hide-mob" style="margin-top: 35px;">
+                <form class="example-form" [formGroup]="addComplaint" (ngSubmit)="saveEvent(addComplaint.value)">
+                    <div class="row">
+
+                        <!-- <div class="col-1"></div> -->
+                        <div class="col-2 formTitle">Title :</div>
+                        <div class="col-3" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-icon matSuffix>person</mat-icon>
+                                <input matInput formControlName="Title" >
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-2"></div>
+                        <div class="col-2 formTitle">Category:</div>
+                        <div class="col-3" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-label>Select Category</mat-label>
+                                <mat-select formControlName="CategoryId" (selectionChange)="onCategoryChange($event.value)">
+                                  <mat-option>--select State--</mat-option>
+                                  <mat-option *ngFor="let category of categories" [value]="category.CategoryId">
+                                    {{ category.En_Name }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </div>
+
+                        <!-- <div class="col-1"></div> -->
+                        <div class="col-2 formTitle">Sub Category:</div>
+                        <div class="col-3" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <mat-label>Select Sub-Category</mat-label>
+                                <mat-select formControlName="SubCategoryId">
+                                  <mat-option>--Select Sub-Category--</mat-option>
+                                  <mat-option *ngFor="let subCategory of subCategories" [value]="subCategory.SubCategoryId">
+                                    {{ subCategory.En_Name }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </div>
+
+                        <div class="col-2"></div>
+                        <div class="col-2 formTitle">Description:</div>
+                        <div class="col-3" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <textarea matInput matTextareaAutosize matAutosizeMinRows=1
+                                    matAutosizeMaxRows=5 formControlName="Description" ></textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- <div class="col-1"></div> -->
+                        <div class="col-2 formTitle">Upload Image:</div>
+                        <div class="col-3" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <ngx-mat-file-input #photo formControlName="BannerImageName"
+                                    (change)="onAddImage($event)" placeholder="Image and Document Upload">
+                                    <mat-icon matPrefix>cloud_upload</mat-icon>
+                                </ngx-mat-file-input>
+                                <button mat-icon-button matSuffix *ngIf="!photo.empty"
+                                    (click)="photo.clear($event); onRemoveImage()">
+                                    <mat-icon matSuffix>clear</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+
+                        <section class="col-6">
+                            <div class="example-button-width">
+                                <button mat-raised-button type="button" style="background-color: rgb(243 137 24)"
+                                    (click)="reloadPage()">Cancel</button>
+                                <button mat-raised-button type="submit" color="primary"
+                                    style="margin-left: 10px; margin-top: 30px ; background-color: #0F3963">Save</button>
+                            </div>
+                        </section>
+                    </div>
+                </form>
+            </div>
+        </ng-container>
+
+        <ng-container class="show-mob">
+            <div class="row show-mob" style="margin-top: 35px;">
+                <form class="example-form" [formGroup]="addComplaint" (ngSubmit)="saveEvent(addComplaint.value)">
+                    <div class="row">
+
+                        <div class="col-12" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="legacy">
+                                <mat-icon matPrefix>person</mat-icon>
+                                <mat-label style="margin-left: 10px;">Title</mat-label>
+                                <input matInput placeholder="Title" style="margin-left: 10px;">
+                                <mat-icon matSuffix>edit</mat-icon>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-12" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="legacy">
+                                <mat-label>Select Category</mat-label>
+                                <mat-select  formControlName="CategoryId">
+                                  <mat-option>--Select Category--</mat-option>
+                                  <mat-option *ngFor="let category of categories" [value]="category.CategoryId">
+                                    {{ category.En_Name }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </div>
+
+                        <div class="col-12" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="legacy">
+                                <mat-label>Select Sub-Category</mat-label>
+                                <mat-select formControlName="SubCategoryId">
+                                  <mat-option>--Select Sub-Category--</mat-option>
+                                  <mat-option *ngFor="let subCategory of subCategories" [value]="subCategory.SubCategoryId">
+                                    {{ subCategory.En_Name }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </div>
+
+                        <div class="col-12" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="legacy">
+                                <mat-icon matPrefix>description</mat-icon>
+                                <mat-label style="margin-left: 10px;">Description</mat-label>
+                                <textarea matInput style="margin-left: 10px;"></textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-12" style="padding-left:10px;">
+                            <mat-form-field class="example-full-width" appearance="legacy">
+                                <mat-label style="margin-left: 10px;">Image and Document Upload</mat-label>
+                                <ngx-mat-file-input #photo formControlName="BannerImageName" style="margin-left: 10px;"
+                                    (change)="onAddImage($event)">
+                                </ngx-mat-file-input>
+                                <mat-icon matPrefix>cloud_upload</mat-icon>
+                                <button mat-icon-button matSuffix *ngIf="!photo.empty"
+                                    (click)="photo.clear($event); onRemoveImage()">
+                                    <mat-icon matSuffix>clear</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+
+                        <section class="col-6">
+                            <div class="example-button-width">
+                                <button mat-raised-button type="submit" color="primary"
+                                    style="width:100px; background-color: #0F3963">Submit</button>
+                            </div>
+                        </section>
+                        <section class="col-6">
+                            <div class="example-button-width">
+                                <button mat-raised-button type="button" color="primary"
+                                    style="width:100px; background-color: rgb(243 137 24)">Cancel</button>
+                            </div>
+                        </section>
+                    </div>
+                </form>
+            </div>
+        </ng-container>
+    </mat-card>
+</ng-container>

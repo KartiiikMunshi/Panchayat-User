@@ -1,0 +1,115 @@
+<div class="col-12 " *ngIf="dataSource && dataSource.data.length > 0">
+
+    <div class="example-container mat-elevation-z8 hide-mob">
+        <mat-table #table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="Name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'Name' | translate }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="element.FirstName !== null">
+                        {{element.FirstName +" "+ element.LastName}}
+                    </ng-container>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="WardId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'Ward_Id' | translate }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <!-- <ng-container *ngIf="element.TblWard !== null"> -->
+                        {{element.WardId}}
+                    <!-- </ng-container> -->
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="PanchayatId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'Panchayat_Id' | translate }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="element.TblPanchayat !== null">
+                        {{element.TblPanchayat.Name}}
+                    </ng-container>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Mobile">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'Mobile' | translate }}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.Phone}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" style="cursor: pointer;"
+                [routerLink]="['user-details', row.UserId]"></mat-row>
+        </mat-table>
+        <mat-paginator [length]="dataSource.data.length" [pageSize]="5" [pageIndex]="0" hidePageSize
+          showFirstLastButtons (page)="onPaginateChange($event)" dir="ltr">
+        </mat-paginator>
+    </div>
+    <div class="col-12 show-small-mob">
+
+        <table mat-table [dataSource]="dataSourceSmall" multiTemplateDataRows>
+    
+            <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element" class="title-td titlecell">
+                    <ng-container *ngIf="element.FirstName !== null">
+                        {{element.FirstName +" "+ element.LastName}}
+                    </ng-container>
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="img">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element" class="sequence-mob1 title-td imgcell">
+                    <!-- <img class="sequence-mob1" src="../../../assets/images/bglisticon.jpg" /> -->
+                    <img class="sequence-mob1" src="../../../assets/images/eventlstimgs.jpg" />
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="expandedDetail">
+                <td class="expanded-td" mat-cell *matCellDef="let element">
+                    <div class="row expanded-div">
+    
+                        <div class="col-12"> {{ 'Mobile' | translate }} :
+                            <span>{{element.Phone}}</span>
+                        </div>
+    
+                        <div class="col-12">
+                            <span class="sequence-mob"> {{ 'Panchayat_Id' | translate }} :
+                                <ng-container *ngIf="element.TblPanchayat !== null">
+                                    {{element.TblPanchayat.Name}}
+                                </ng-container>
+                            </span>
+                        </div>
+    
+                        <div class="col-12">
+                            <!-- <ng-container *ngIf="element.TblWard !== null"> -->
+                                {{element.WardId}}
+                            <!-- </ng-container> -->
+                        </div>
+    
+                    </div>
+                </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsSmallMob; sticky: true"></tr>
+            <tr mat-row *matRowDef="let element; columns: displayedColumnsSmallMob;" style="cursor: pointer;">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" [routerLink]="['user-details', row.UserId]">
+            </tr>
+        </table>
+        <!-- <mat-paginator class="inbox-paginator" [length]="dataSource.data.length" [pageSize]="5" [pageIndex]="0"
+        hidePageSize showFirstLastButtons (page)="onPaginateChange($event)" dir="ltr">
+      </mat-paginator> -->
+      <mat-paginator #scheduledOrdersPaginator [length]="dataSourceSmall.data.length" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+    </div>
+</div>
+<div class="row">
+    <div class="center" *ngIf="dataSource && dataSource.data.length == 0">
+        <mat-icon class="center-icon">cloud_queue</mat-icon>
+        <span class="center-text">NO DATA FOUND</span>
+    </div>
+</div>
+

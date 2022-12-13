@@ -1,0 +1,85 @@
+<mat-toolbar class="example-header" style="color:white;">
+  <mat-toolbar-row>
+    <a class="d-flex align-items-center col-md-4 mb-2 mb-md-0 text-dark text-decoration-none hide-mob">
+      <div aria-label="Toggle sidenav" class="side-nav-button me-3 text-light" style="margin-top:0px ; cursor: pointer;"
+        (click)="drawer.toggle()">
+        <mat-icon style="color: rgb(0, 0, 0);" class="headerButton">blur_on</mat-icon>
+      </div>
+    </a>
+
+    <span class="example-spacer">
+      <img class="webimg" style="justify-content: center;" src="../../../assets/images/Panchayat-bhavan-removebg-preview.png" alt="" width="100"
+        height="35">
+    </span>
+
+    <button mat-icon-button aria-label="Example icon-button with a menu" (click)="search()" *ngIf="!isSearch">
+      <mat-icon class="headerButton" style="color: rgb(45 118 151);" aria-hidden="false">search</mat-icon>
+      <!-- <app-main></app-main> -->
+    </button>
+
+    <mat-form-field class="searchfield" *ngIf="isSearch">
+      <input type="text" matInput placeholder="Search" (keyup)="fireFilterEvents($event)">
+    </mat-form-field>
+
+    <button mat-icon-button class="example-icon" aria-hidden="false" routerLink="contacts">
+      <mat-icon class="headerButton" style="color: rgb(45 118 151);"> contacts</mat-icon>
+    </button>
+
+    <!-- <button mat-icon-button class="" aria-hidden="false" routerLink="main">
+      <mat-icon class="headerButton" style="color: rgb(45 118 151);"> home</mat-icon>
+    </button> -->
+
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #drawer mode="over" closed role="navigation" class="example-sidenav">
+    <mat-nav-list class="sidelist">
+      <div class="topnav">
+        <div>
+          <img class="imguser" src=".././../../assets/images/user.svg" alt="" width="50%" height="50%">
+        </div>
+
+        <mat-nav-list>
+
+          <mat-list-item class="titlename" routerLink="login">
+            <h5 class="username">Infobyd User</h5>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+
+          <mat-list-item routerLink="account">
+            <mat-icon mat-list-icon>person</mat-icon>
+            <div>
+              <h8 class="listtext" mat-line>My Account</h8>
+            </div>
+          </mat-list-item>
+
+          <mat-list-item routerLink="/logout">
+            <mat-icon mat-list-icon>logout</mat-icon>
+            <div>
+              <h8 class="listtext" mat-line>Logout</h8>
+            </div>
+          </mat-list-item>
+
+          <mat-list-item routerLink="main">
+            <mat-icon mat-list-icon>markunread_mailbox</mat-icon>
+            <div>
+              <select class="custom-select" (change)="changelang($any($event.target).value)">Language
+                <option value="en" [selected]="lang == 'en'">{{ 'English' | translate}}</option>
+                <option value="hi" [selected]="lang == 'hi'">{{ 'Hindi' | translate}}</option>
+              </select>
+            </div>
+          </mat-list-item>
+        </mat-nav-list>
+
+       
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="example-sidenav-content">
+    <ng-container>
+      <router-outlet></router-outlet>
+      <!-- <app-main [isSearch]="true"></app-main> -->
+    </ng-container>
+  </mat-sidenav-content>
+</mat-sidenav-container>
